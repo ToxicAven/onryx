@@ -1,0 +1,14 @@
+{
+  "name": "onryx-bot",
+  "version": "0.0.1",
+  "description": "Simple Bot for Aven's Loft",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ToxicAven",
+  "license": "GNUAGPLv3",
+  "dependencies": {
+    "discord.js": "^12.1.1"
+  }
+}
