@@ -92,21 +92,46 @@ bot.on('message', async message => {
     //Get Online Status
     const hypixel = await fetch(`https://api.hypixel.net/status?key=${auth.hyapikey}&uuid=${uuid.id}`).then(hypixelresponse => hypixelresponse.json());
 
+    //Check for Map and Mode, because hypixel has 2 fucking variables that dont exist all the time
+    if (hypixel.session && hypixel.session.mode) {
+  var fields =[  { name: 'Online', value: trim(hypixel.session.online, 1024) },
+            { name: 'Gametype', value: trim(hypixel.session.gameType, 1024) },
+            { name: 'Mode', value: trim(hypixel.session.mode, 1024) }, ]
+            }
+    if (hypixel.session && hypixel.session.map) {
+        var fields =[  { name: 'Online', value: trim(hypixel.session.online, 1024) },
+          { name: 'Gametype', value: trim(hypixel.session.gameType, 1024) },
+          { name: 'Map', value: trim(hypixel.session.map, 1024) }, ]
+          }
+    if (hypixel.session && hypixel.session.map && hypixel.session.mode) {
+        var fields =[  { name: 'Online', value: trim(hypixel.session.online, 1024) },
+          { name: 'Gametype', value: trim(hypixel.session.gameType, 1024) },
+          { name: 'Mode', value: trim(hypixel.session.mode, 1024) },
+          { name: 'Map', value: trim(hypixel.session.map, 1024) }, ]
+          }
     //Create Embed, Include Username and Status
+    if (hypixel.session.online === false) {
         const embed = new Discord.MessageEmbed()
-            .setColor('#F531CA')
+        .setColor('#FF0000')
+        .setTitle(args)
+        .addFields(
+            { name: 'Online', value: trim(hypixel.session.online, 1024) },
+        );
+    message.channel.send(embed);  
+    } else if (hypixel.session.online === true) {
+        const embed = new Discord.MessageEmbed()
+            .setColor('#00FF00')
             .setTitle(args)
-            .addFields(
-				{ name: 'Online', value: trim(hypixel.session.online, 1024) },
-			);
+            .addFields(fields);
         message.channel.send(embed);
+            }
     };
 
 });
 
 //Status set
 bot.on("ready", async() => {
-    bot.user.setActivity("you like a fiddle", {type: 'PLAYING'});
+    bot.user.setActivity("APIs Stutter", {type: 'WATCHING'});
 });
 
 //Launch
