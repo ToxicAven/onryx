@@ -18,12 +18,14 @@ bot.on("ready", () => {
     console.log(`Logged in as ${bot.user.tag}!`)
 });
 
-/*Commands List
+//Commands List
 var commandsList = [
     prefix + "version - Displays version of bot",
-    prefix + "Help - Displays this message"
+    prefix + "Help - Displays this message",
+    prefix + "uuid - Display a Minecraft Usernames UUID",
+    prefix + "hyonline - Checks A players Hypixel status, and location if Online"
 ]
-*/
+
 
 //commands handling
 bot.on('message', async message => {
@@ -32,41 +34,20 @@ bot.on('message', async message => {
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    //Urban Dictionary Definition Pull
-    if (command === 'urban') {
-		if (!args.length) {
-			return message.channel.send('You need to supply a search term!');
-		}
 
-        //add "Term=`args`" To the API Call
-		const query = querystring.stringify({ term: args.join(' ') });
-
-        //Send Request
-		const { list } = await fetch(`https://api.urbandictionary.com/v0/define?${query}`).then(response => response.json());
-
-        //No Results Check
-		if (!list.length) {
-			return message.channel.send(`No results found for **${args.join(' ')}**.`);
-		}
-
-        //Put the response into an constant
-		const [answer] = list;
-
-        //Generate Embed
-		const embed = new Discord.MessageEmbed()
-			.setColor('#EFFF00')
-			.setTitle(answer.word)
-			.addFields(
-				{ name: 'Definition', value: trim(answer.definition, 1024) },
-				{ name: 'Example', value: trim(answer.example, 1024) },
-			);
-        message.channel.send(embed);  
-    }   
-
-    //Version COmmand
-    else if (command === 'version') {
+    //Version Command
+    if (command === 'version') {
         message.channel.send('Running Bot Version ' + version);
     }   
+
+      else if (command === 'help') {
+              const embed = new Discord.MessageEmbed()
+            .setTitle("Commands")
+            .setDescription(commandsList)
+            .setColor('#0099ff');
+        message.channel.send(embed);
+    }
+
     //Get MC Username UUID From Mojang API
     else if (command === 'uuid') {
             if (!args.length) {
@@ -109,6 +90,7 @@ bot.on('message', async message => {
           { name: 'Mode', value: trim(hypixel.session.mode, 1024) },
           { name: 'Map', value: trim(hypixel.session.map, 1024) }, ]
           }
+
     //Create Embed, Include Username and Status
     if (hypixel.session.online === false) {
         const embed = new Discord.MessageEmbed()
@@ -125,6 +107,7 @@ bot.on('message', async message => {
             .addFields(fields);
         message.channel.send(embed);
             }
+    
     };
 
 });
