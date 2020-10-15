@@ -12,10 +12,7 @@
   "dependencies": {
     "cross-fetch": "^3.0.6",
     "discord.js": "^12.1.1",
-    "mojang-api": "0.0.2",
     "node-fetch": "^2.6.1",
-    "node-mojang-api": "^1.0.3",
-    "querystring": "^0.2.0",
-    "wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz"
+    "querystring": "^0.2.0"
   }
 }
