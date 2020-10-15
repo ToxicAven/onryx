@@ -1,13 +1,14 @@
 {
   "name": "onryx-bot",
-  "version": "0.0.1",
-  "description": "Simple Bot for Aven's Loft",
+  "version": "1.2.0",
+  "description": "Simple Bot for Making API Calls",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ToxicAven/onryx.git"
   },
   "author": "ToxicAven",
-  "license": "GNUAGPLv3",
+  "license": "AGPL-3.0-only",
   "dependencies": {
     "cross-fetch": "^3.0.6",
     "discord.js": "^12.1.1",
@@ -15,6 +16,6 @@
     "node-fetch": "^2.6.1",
     "node-mojang-api": "^1.0.3",
     "querystring": "^0.2.0",
-    "wolfram-alpha-api": "file:wolfram-alpha-api-1.0.0-rc.1.tgz"
+    "wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz"
   }
 }
