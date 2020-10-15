@@ -48,6 +48,30 @@ bot.on('message', async message => {
         message.channel.send(embed);
     }
 
+    else if (command === 'watchdog') {
+
+    const wdStats = await fetch(`https://api.hypixel.net/watchdogstats?key=${auth.hyapikey}`).then(response => response.json());
+    const embed = new Discord.MessageEmbed()
+        .setColor('#F531CA')
+        .setTitle('Watchdog Stats')
+        .addFields(
+            { name: 'Bans in the last Day', value: trim(wdStats.watchdog_rollingDaily, 1024) },
+            { name: 'Bans in the last Minute', value: trim(wdStats.watchdog_lastMinute, 1024) },
+            { name: 'Watchdog Bans Ever', value: trim(wdStats.watchdog_total, 1024) },
+            )
+    message.channel.send(embed);
+}
+/*    else if (command === 'prio') {
+        const prio = await fetch(`https://api.2b2t.dev/prioq`).then(response => response.json());
+
+        const embed = new Discord.MessageEmbed()
+      .setTitle("2B2T Priority Queue")
+      .setDescription("Prio Queue is " + prio + " Players Long!")
+      .setColor('#0099ff');
+  message.channel.send(embed);
+}
+*/
+
     //Get MC Username UUID From Mojang API
     else if (command === 'uuid') {
             if (!args.length) {
