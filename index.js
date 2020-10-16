@@ -21,11 +21,12 @@ bot.on("ready", () => {
 //Commands List
 var commandsList = [
     prefix + "version - Displays version of bot",
-    prefix + "Help - Displays this message",
+    prefix + "help - Displays this message",
     prefix + "uuid - Display a Minecraft Usernames UUID",
     prefix + "hyonline - Checks A players Hypixel status, and location if Online",
     prefix + "2b2t - Checks the 2B2T Queue Lengths",
-    prefix + "Watchdog - Check Past day, Minute, and All time Bans by Watchdog AC"
+    prefix + "ping - Checks the Bots Connection to Discord API",
+    prefix + "watchdog - Check Past day, Minute, and All time Bans by Watchdog AC"
 ]
 
 
@@ -41,6 +42,14 @@ bot.on('message', async message => {
     if (command === 'version') {
         message.channel.send('Running Bot Version ' + version);
     }   
+
+    else if (command === 'ping') {
+        const embed = new Discord.MessageEmbed()
+      .setTitle("Ping")
+      .addFields({ name: 'Bot => Discord', value: `${Math.round(bot.ws.ping)}ms`},)
+      .setColor('#0099ff');
+  message.channel.send(embed);
+    }
 
       else if (command === 'help') {
               const embed = new Discord.MessageEmbed()
