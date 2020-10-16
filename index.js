@@ -10,12 +10,12 @@ const date = Date.now()
 
 
 //Constants
-const version = '1.2';
+const version = '0.5.0';
 const prefix = '^';
 
 //Init P2
 bot.on("ready", () => {
-    console.log(`Logged in as ${bot.user.tag}!`)
+    console.log(`\n------------\nOnryx ${version}\nRunning as ${bot.user.tag}\nMade by ToxicAven#3678\nLicensed under GNU AGPL-3.0\n------------`)
 });
 
 //Commands List

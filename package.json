@@ -1,6 +1,6 @@
 {
   "name": "onryx-bot",
-  "version": "1.2.0",
+  "version": "0.5.0",
   "description": "Simple Bot for Making API Calls",
   "main": "index.js",
   "repository": {
