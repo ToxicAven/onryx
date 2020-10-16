@@ -10,12 +10,12 @@ const date = Date.now()
 
 
 //Constants
-const version = '0.5.0';
+const version = '0.5.1';
 const prefix = '^';
 
 //Init P2
 bot.on("ready", () => {
-    console.log(`\n------------\nOnryx ${version}\nRunning as ${bot.user.tag}\nMade by ToxicAven#3678\nLicensed under GNU AGPL-3.0\n------------`)
+    console.log(`\n------------\nOnryx ${version}\nRunning as ${bot.user.tag}\nMade by ToxicAven#3678\nLicensed under GNU AGPL-3.0\n------------\n`)
 });
 
 //Commands List
@@ -40,10 +40,12 @@ bot.on('message', async message => {
 
     //Version Command
     if (command === 'version') {
+        console.log(`Version Command Issued`)
         message.channel.send('Running Bot Version ' + version);
     }   
 
     else if (command === 'ping') {
+        console.log(`Ping Command Issued`)
         const embed = new Discord.MessageEmbed()
       .setTitle("Ping")
       .addFields({ name: 'Bot => Discord', value: `${Math.round(bot.ws.ping)}ms`},)
@@ -52,6 +54,7 @@ bot.on('message', async message => {
     }
 
       else if (command === 'help') {
+        console.log(`Help Command Issued`)
               const embed = new Discord.MessageEmbed()
             .setTitle("Commands")
             .setDescription(commandsList)
@@ -59,7 +62,7 @@ bot.on('message', async message => {
         message.channel.send(embed);
     }
     else if (command === '2b2t') {
-
+        console.log(`2b2t Command Issued`)
         const prio = (await fetch(`https://api.2b2t.dev/prioq`).then(response => response.json()))[1];
         const standard = (await fetch(`https://2b2t.io/api/queue?last=true`).then(standardresponse => standardresponse.json()))[0][1];
         const TPS = (await fetch(`https://api.2b2t.dev/status`).then(tpsresponse => tpsresponse.json()))[0][0];
@@ -77,7 +80,7 @@ bot.on('message', async message => {
     }
 
     else if (command === 'watchdog') {
-
+        console.log(`Watchdog Command Issued`)
     const wdStats = await fetch(`https://api.hypixel.net/watchdogstats?key=${auth.hyapikey}`).then(response => response.json());
     const embed = new Discord.MessageEmbed()
         .setColor('#F531CA')
@@ -89,19 +92,10 @@ bot.on('message', async message => {
             )
     message.channel.send(embed);
 }
-/*    else if (command === 'prio') {
-        const prio = await fetch(`https://api.2b2t.dev/prioq`).then(response => response.json());
-
-        const embed = new Discord.MessageEmbed()
-      .setTitle("2B2T Priority Queue")
-      .setDescription("Prio Queue is " + prio + " Players Long!")
-      .setColor('#0099ff');
-  message.channel.send(embed);
-}
-*/
 
     //Get MC Username UUID From Mojang API
     else if (command === 'uuid') {
+        console.log(`UUID Command Issued`)
             if (!args.length) {
                 return message.channel.send('You need to specify a Player Name!');
         };
@@ -115,6 +109,7 @@ bot.on('message', async message => {
     
     //Check Hypixel Online Status
     else if (command === 'hyonline') {
+        console.log(`Hyonline Command Issued`)
         if (!args.length) {
             return message.channel.send('You need to specify a Player Name!');
     };
@@ -166,7 +161,7 @@ bot.on('message', async message => {
 
 //Status set
 bot.on("ready", async() => {
-    bot.user.setActivity("APIs Stutter", {type: 'WATCHING'});
+    bot.user.setActivity("Prefix ^", {type: 'PLAYING'});
 });
 
 //Launch
