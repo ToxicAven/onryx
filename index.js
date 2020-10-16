@@ -24,6 +24,7 @@ var commandsList = [
     prefix + "Help - Displays this message",
     prefix + "uuid - Display a Minecraft Usernames UUID",
     prefix + "hyonline - Checks A players Hypixel status, and location if Online",
+    prefix + "2b2t - Checks the 2B2T Queue Lengths",
     prefix + "Watchdog - Check Past day, Minute, and All time Bans by Watchdog AC"
 ]
 
@@ -46,6 +47,19 @@ bot.on('message', async message => {
             .setTitle("Commands")
             .setDescription(commandsList)
             .setColor('#0099ff');
+        message.channel.send(embed);
+    }
+    else if (command === '2b2t') {
+
+        const prio = (await fetch(`https://api.2b2t.dev/prioq`).then(response => response.json()))[1];
+        const standard = (await fetch(`https://2b2t.io/api/queue?last=true`).then(standardresponse => standardresponse.json()))[0][1];
+        const embed = new Discord.MessageEmbed()
+            .setColor('#F531CA')
+            .setTitle('2B2T Queue Stats')
+            .addFields(
+                { name: 'Priority Queue', value: prio},
+                { name: 'Standard Queue', value: standard},
+                )
         message.channel.send(embed);
     }
 
