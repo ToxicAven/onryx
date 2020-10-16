@@ -23,7 +23,8 @@ var commandsList = [
     prefix + "version - Displays version of bot",
     prefix + "Help - Displays this message",
     prefix + "uuid - Display a Minecraft Usernames UUID",
-    prefix + "hyonline - Checks A players Hypixel status, and location if Online"
+    prefix + "hyonline - Checks A players Hypixel status, and location if Online",
+    prefix + "Watchdog - Check Past day, Minute, and All time Bans by Watchdog AC"
 ]
 
 
