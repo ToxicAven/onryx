@@ -24,7 +24,7 @@ var commandsList = [
     prefix + "help - Displays this message",
     prefix + "uuid - Display a Minecraft Usernames UUID",
     prefix + "hyonline - Checks A players Hypixel status, and location if Online",
-    prefix + "2b2t - Checks the 2B2T Queue Lengths",
+    prefix + "2b2t - Checks Stats of The 2B2T Minecraft Server",
     prefix + "ping - Checks the Bots Connection to Discord API",
     prefix + "watchdog - Check Past day, Minute, and All time Bans by Watchdog AC"
 ]
@@ -62,12 +62,16 @@ bot.on('message', async message => {
 
         const prio = (await fetch(`https://api.2b2t.dev/prioq`).then(response => response.json()))[1];
         const standard = (await fetch(`https://2b2t.io/api/queue?last=true`).then(standardresponse => standardresponse.json()))[0][1];
+        const TPS = (await fetch(`https://api.2b2t.dev/status`).then(tpsresponse => tpsresponse.json()))[0][0];
+        const uptime = (await fetch(`https://api.2b2t.dev/status`).then(uptimeresponse => uptimeresponse.json()))[0][3];
         const embed = new Discord.MessageEmbed()
             .setColor('#F531CA')
-            .setTitle('2B2T Queue Stats')
+            .setTitle('2B2T Stats')
             .addFields(
                 { name: 'Priority Queue', value: prio},
                 { name: 'Standard Queue', value: standard},
+                { name: 'TPS', value: TPS},
+                { name: 'Uptime', value: uptime},
                 )
         message.channel.send(embed);
     }
