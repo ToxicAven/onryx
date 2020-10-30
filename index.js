@@ -10,7 +10,7 @@ const date = Date.now()
 
 
 //Constants
-const version = '0.5.2';
+const version = '0.5.3';
 const prefix = '^';
 
 //Init P2
@@ -98,6 +98,21 @@ bot.on('message', async message => {
             .addFields(twoBfield)
         message.channel.send(embed);
     }
+
+    else if (command === 'mcskin') {
+        console.log(`McSkin Command Issued`)
+        if (!args.length) {
+            return message.channel.send('You need to specify a Player Name!');
+    };
+        const uuid = await fetch(`https://api.mojang.com/users/profiles/minecraft/${args}`).then(response => response.json());
+        const skin = ('https://minotar.net/armor/body/' + uuid.id + '/256.png');
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`${args}`)
+            .setColor('#F531CA')
+            .setImage(skin);
+    message.channel.send(embed);
+    }
+    /*
     else if (command === 'hypixel') {
         console.log(`Hypixel Command Issued`)
             if (!args.length) {
@@ -113,7 +128,7 @@ bot.on('message', async message => {
             .setTitle(hypixel2.networkExp)
         message.channel.send(embed);
     }
-
+*/
     else if (command === 'watchdog') {
         console.log(`Watchdog Command Issued`)
     const wdStats = await fetch(`https://api.hypixel.net/watchdogstats?key=${auth.hyapikey}`).then(response => response.json());
