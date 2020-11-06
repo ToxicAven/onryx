@@ -13,9 +13,10 @@ var version = require('./cmds/version.js');
 var ping = require('./cmds/ping.js')
 var help = require('./cmds/help.js')
 var catgirl = require('./cmds/catgirl.js');
+var twobee = require('./cmds/2b2t.js');
 
 //Constants
-const botversion = '0.5.9';
+const botversion = '0.5.10';
 const prefix = '^';
 
 //Init P2
@@ -59,30 +60,7 @@ bot.on('message', async message => {
     }
     else if (command === '2b2t') {
         console.log(`2b2t Command Issued`)
-        const prio = (await fetch(`https://api.2b2t.dev/prioq`).then(response => response.json()))[1];
-        const standard = (await fetch(`https://2b2t.io/api/queue?last=true`).then(standardresponse => standardresponse.json()))[0][1];
-        const TPS = (await fetch(`https://api.2b2t.dev/status`).then(tpsresponse => tpsresponse.json()))[0][0];
-        const uptime = (await fetch(`https://api.2b2t.dev/status`).then(uptimeresponse => uptimeresponse.json()))[0][3];
-        if (uptime === 0) {
-            var twoBfield = [
-                { name: 'Priority Queue', value: prio},
-                { name: 'Standard Queue', value: standard},
-                { name: 'TPS', value: 'Bot Offline'},
-                { name: 'Uptime', value: 'Bot Offline'},
-            ]
-        } else {
-            var twoBfield = [
-                { name: 'Priority Queue', value: prio},
-                { name: 'Standard Queue', value: standard},
-                { name: 'TPS', value: TPS},
-                { name: 'Uptime', value: uptime},
-            ] 
-        }
-        const embed = new Discord.MessageEmbed()
-            .setColor('#F531CA')
-            .setTitle('2B2T Stats')
-            .addFields(twoBfield)
-        message.channel.send(embed);
+        twobee.custom(Discord, message, fetch)
     }
 
     else if (command === 'mcskin') {
