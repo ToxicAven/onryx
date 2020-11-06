@@ -1,6 +1,8 @@
 var uwuify = {
     custom: function(args, message) {
-
+        if (!args.length) {
+            return message.channel.send('Nyothing to uwufy...');
+    };
     var str = args.join(' ')
 
     str = str.replace('L', 'W')

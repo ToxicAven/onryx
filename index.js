@@ -50,9 +50,6 @@ bot.on('message', async message => {
 
     else if (command === 'uwu') {
         console.log(`uwu Command Issued`)
-        if (!args.length) {
-            return message.channel.send('Nyothing to uwufy...');
-    };
     uwuify.custom(args, message);
     }
 
