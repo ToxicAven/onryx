@@ -17,9 +17,10 @@ var twobee = require('./cmds/2b2t.js');
 var mcskin = require('./cmds/mcskin.js');
 var watchdog = require('./cmds/watchdog.js');
 const uuid = require('./cmds/uuid.js');
+const hypixelonline = require('./cmds/hypixelonline.js');
 
 //Constants
-const botversion = '0.5.13';
+const botversion = '0.6.2';
 const prefix = '^';
 
 //Init P2
@@ -70,23 +71,7 @@ bot.on('message', async message => {
         console.log(`McSkin Command Issued`)
         mcskin.custom(Discord, message, fetch, args);
     }
-    /*
-    else if (command === 'hypixel') {
-        console.log(`Hypixel Command Issued`)
-            if (!args.length) {
-                return message.channel.send('You need to specify a Player Name!');
-        };
 
-        const uuid = await fetch(`https://api.mojang.com/users/profiles/minecraft/${args}`).then(response => response.json());
-        const hypixel = await fetch(`https://api.hypixel.net/player?key=${auth.hyapikey}&uuid=${uuid.id}`).then(hypixelresponse => hypixelresponse.json());
-        const hypixel2 = hypixel.player.stats
-        console.log(hypixel2.networkExp)
-        const embed = new Discord.MessageEmbed()
-            .setColor('#F531CA')
-            .setTitle(hypixel2.networkExp)
-        message.channel.send(embed);
-    }
-*/
     else if (command === 'watchdog') {
         console.log(`Watchdog Command Issued`)
         watchdog.custom(Discord, message, fetch, auth);
@@ -101,50 +86,7 @@ bot.on('message', async message => {
     //Check Hypixel Online Status
     else if (command === 'hyonline') {
         console.log(`Hyonline Command Issued`)
-        if (!args.length) {
-            return message.channel.send('You need to specify a Player Name!');
-    };
-
-    //Get UUID because Hypixel API cant take Usernames
-    const uuid = await fetch(`https://api.mojang.com/users/profiles/minecraft/${args}`).then(response => response.json());
-
-    //Get Online Status
-    const hypixel = await fetch(`https://api.hypixel.net/status?key=${auth.hyapikey}&uuid=${uuid.id}`).then(hypixelresponse => hypixelresponse.json());
-
-    //Check for Map and Mode, because hypixel has 2 fucking variables that dont exist all the time
-    if (hypixel.session && hypixel.session.mode) {
-  var fields =[  { name: 'Online', value: trim(hypixel.session.online, 1024) },
-            { name: 'Gametype', value: trim(hypixel.session.gameType, 1024) },
-            { name: 'Mode', value: trim(hypixel.session.mode, 1024) }, ]
-            }
-    if (hypixel.session && hypixel.session.map) {
-        var fields =[  { name: 'Online', value: trim(hypixel.session.online, 1024) },
-          { name: 'Gametype', value: trim(hypixel.session.gameType, 1024) },
-          { name: 'Map', value: trim(hypixel.session.map, 1024) }, ]
-          }
-    if (hypixel.session && hypixel.session.map && hypixel.session.mode) {
-        var fields =[  { name: 'Online', value: trim(hypixel.session.online, 1024) },
-          { name: 'Gametype', value: trim(hypixel.session.gameType, 1024) },
-          { name: 'Mode', value: trim(hypixel.session.mode, 1024) },
-          { name: 'Map', value: trim(hypixel.session.map, 1024) }, ]
-          }
-
-    //Create Embed, Include Username and Status
-    if (hypixel.session.online === false) {
-        const embed = new Discord.MessageEmbed()
-        .setColor('#FF0000')
-        .setTitle(args)
-        .addFields(
-            { name: 'Online', value: trim(hypixel.session.online, 1024) },
-        );
-    message.channel.send(embed);  
-    } else if (hypixel.session.online === true) {
-        const embed = new Discord.MessageEmbed()
-            .setColor('#00FF00')
-            .setTitle(args)
-            .addFields(fields);
-        message.channel.send(embed);
-            }
+        hypixelonline.custom(Discord, message, fetch, auth, args);
     };
 
 });
