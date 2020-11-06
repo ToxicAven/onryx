@@ -14,9 +14,11 @@ var ping = require('./cmds/ping.js')
 var help = require('./cmds/help.js')
 var catgirl = require('./cmds/catgirl.js');
 var twobee = require('./cmds/2b2t.js');
+var mcskin = require('./cmds/mcskin.js');
+var watchdog = require('./cmds/watchdog.js');
 
 //Constants
-const botversion = '0.5.10';
+const botversion = '0.5.12';
 const prefix = '^';
 
 //Init P2
@@ -60,21 +62,12 @@ bot.on('message', async message => {
     }
     else if (command === '2b2t') {
         console.log(`2b2t Command Issued`)
-        twobee.custom(Discord, message, fetch)
+        twobee.custom(Discord, message, fetch);
     }
 
     else if (command === 'mcskin') {
         console.log(`McSkin Command Issued`)
-        if (!args.length) {
-            return message.channel.send('You need to specify a Player Name!');
-    };
-        const uuid = await fetch(`https://api.mojang.com/users/profiles/minecraft/${args}`).then(response => response.json());
-        const skin = ('https://minotar.net/armor/body/' + uuid.id + '/256.png');
-        const embed = new Discord.MessageEmbed()
-            .setTitle(`${args}`)
-            .setColor('#F531CA')
-            .setImage(skin);
-    message.channel.send(embed);
+        mcskin.custom(Discord, message, fetch, args);
     }
     /*
     else if (command === 'hypixel') {
@@ -95,16 +88,7 @@ bot.on('message', async message => {
 */
     else if (command === 'watchdog') {
         console.log(`Watchdog Command Issued`)
-    const wdStats = await fetch(`https://api.hypixel.net/watchdogstats?key=${auth.hyapikey}`).then(response => response.json());
-    const embed = new Discord.MessageEmbed()
-        .setColor('#F531CA')
-        .setTitle('Watchdog Stats')
-        .addFields(
-            { name: 'Bans in the last Day', value: trim(wdStats.watchdog_rollingDaily, 1024) },
-            { name: 'Bans in the last Minute', value: trim(wdStats.watchdog_lastMinute, 1024) },
-            { name: 'Watchdog Bans Ever', value: trim(wdStats.watchdog_total, 1024) },
-            )
-    message.channel.send(embed);
+        watchdog.custom(Discord, message, fetch, auth);
 }
 
     //Get MC Username UUID From Mojang API
