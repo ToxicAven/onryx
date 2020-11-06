@@ -1,6 +1,6 @@
 var watchdog = {
-    custom: async function(Discord, message, fetch, auth) {
-    const wdStats = await fetch(`https://api.hypixel.net/watchdogstats?key=${auth.hyapikey}`).then(response => response.json());
+    custom: async function(Discord, message, fetch, hyapikey) {
+    const wdStats = await fetch(`https://api.hypixel.net/watchdogstats?key=${hyapikey}`).then(response => response.json());
     const embed = new Discord.MessageEmbed()
         .setColor('#F531CA')
         .setTitle('Watchdog Stats')

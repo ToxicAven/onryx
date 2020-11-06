@@ -1,7 +1,8 @@
 //token and init P1
 const Discord = require('discord.js');
-var auth = require('./auth.json');
+require('dotenv').config()
 const bot = new Discord.Client();
+const hyapikey = process.env.HYAPI
 const fetch = require('node-fetch');
 const querystring = require('querystring');
 const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
@@ -20,7 +21,7 @@ const uuid = require('./cmds/uuid.js');
 const hypixelonline = require('./cmds/hypixelonline.js');
 
 //Constants
-const botversion = '0.6.2';
+const botversion = '0.6.3';
 const prefix = '^';
 
 //Init P2
@@ -74,7 +75,7 @@ bot.on('message', async message => {
 
     else if (command === 'watchdog') {
         console.log(`Watchdog Command Issued`)
-        watchdog.custom(Discord, message, fetch, auth);
+        watchdog.custom(Discord, message, fetch, hyapikey);
 }
 
     //Get MC Username UUID From Mojang API
@@ -86,7 +87,7 @@ bot.on('message', async message => {
     //Check Hypixel Online Status
     else if (command === 'hyonline') {
         console.log(`Hyonline Command Issued`)
-        hypixelonline.custom(Discord, message, fetch, auth, args);
+        hypixelonline.custom(Discord, message, fetch, hyapikey, args);
     };
 
 });
@@ -96,5 +97,4 @@ bot.on("ready", async() => {
     bot.user.setActivity("Prefix ^", {type: 'PLAYING'});
 });
 
-//Launch
-bot.login(auth.token);
+bot.login(process.env.TOKEN);

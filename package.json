@@ -1,6 +1,6 @@
 {
   "name": "onryx-bot",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Simple Bot for Making API Calls",
   "main": "index.js",
   "repository": {
@@ -12,6 +12,7 @@
   "dependencies": {
     "cross-fetch": "^3.0.6",
     "discord.js": "^12.1.1",
+    "dotenv": "^8.2.0",
     "node-fetch": "^2.6.1",
     "querystring": "^0.2.0"
   }
