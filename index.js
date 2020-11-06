@@ -6,29 +6,27 @@ const fetch = require('node-fetch');
 const querystring = require('querystring');
 const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
 const date = Date.now()
-//Deps
 
+//Commands Announcement
+var uwuify = require('./cmds/uwuify.js');
+var version = require('./cmds/version.js');
+var ping = require('./cmds/ping.js')
+var help = require('./cmds/help.js')
+var catgirl = require('./cmds/catgirl.js');
+var twobee = require('./cmds/2b2t.js');
+var mcskin = require('./cmds/mcskin.js');
+var watchdog = require('./cmds/watchdog.js');
+const uuid = require('./cmds/uuid.js');
+const hypixelonline = require('./cmds/hypixelonline.js');
 
 //Constants
-const version = '0.5.3';
+const botversion = '0.6.2';
 const prefix = '^';
 
 //Init P2
 bot.on("ready", () => {
-    console.log(`\n------------\nOnryx ${version}\nRunning as ${bot.user.tag}\nMade by ToxicAven#3678\nLicensed under GNU AGPL-3.0\n------------\n`)
+    console.log(`\n------------\nOnryx ${botversion}\nRunning as ${bot.user.tag}\nMade by ToxicAven#3678\nLicensed under GNU AGPL-3.0\n------------\n`)
 });
-
-//Commands List
-var commandsList = [
-    prefix + "version - Displays version of bot",
-    prefix + "help - Displays this message",
-    prefix + "uuid - Display a Minecraft Usernames UUID",
-    prefix + "hyonline - Checks A players Hypixel status, and location if Online",
-    prefix + "2b2t - Checks Stats of The 2B2T Minecraft Server",
-    prefix + "ping - Checks the Bots Connection to Discord API",
-    prefix + "catgirl - Random Catgirl Pic. uwu",
-    prefix + "watchdog - Check Past day, Minute, and All time Bans by Watchdog AC"
-]
 
 
 //commands handling
@@ -42,168 +40,53 @@ bot.on('message', async message => {
     //Version Command
     if (command === 'version') {
         console.log(`Version Command Issued`)
-        message.channel.send('Running Bot Version ' + version);
+        version.custom(botversion, message);
     }   
 
     else if (command === 'catgirl') {
         console.log(`Catgirl Command Issued`)
-        const caturl = await fetch(`https://nekos.life/api/neko`).then(response => response.json());
-        const embed = new Discord.MessageEmbed()
-            .setTitle("nya!~")
-            .setImage(caturl.neko);
-    message.channel.send(embed);
+        catgirl.custom(message, Discord, fetch);
+    }
+
+    else if (command === 'uwu') {
+        console.log(`uwu Command Issued`)
+    uwuify.custom(args, message);
     }
 
     else if (command === 'ping') {
         console.log(`Ping Command Issued`)
-        const embed = new Discord.MessageEmbed()
-      .setTitle("Ping")
-      .addFields({ name: 'Bot => Discord', value: `${Math.round(bot.ws.ping)}ms`},)
-      .setColor('#0099ff');
-  message.channel.send(embed);
+        ping.custom(Discord, message, bot);
     }
 
       else if (command === 'help') {
         console.log(`Help Command Issued`)
-              const embed = new Discord.MessageEmbed()
-            .setTitle("Commands")
-            .setDescription(commandsList)
-            .setColor('#0099ff');
-        message.channel.send(embed);
+        help.custom(Discord, message);
     }
     else if (command === '2b2t') {
         console.log(`2b2t Command Issued`)
-        const prio = (await fetch(`https://api.2b2t.dev/prioq`).then(response => response.json()))[1];
-        const standard = (await fetch(`https://2b2t.io/api/queue?last=true`).then(standardresponse => standardresponse.json()))[0][1];
-        const TPS = (await fetch(`https://api.2b2t.dev/status`).then(tpsresponse => tpsresponse.json()))[0][0];
-        const uptime = (await fetch(`https://api.2b2t.dev/status`).then(uptimeresponse => uptimeresponse.json()))[0][3];
-        if (uptime === 0) {
-            var twoBfield = [
-                { name: 'Priority Queue', value: prio},
-                { name: 'Standard Queue', value: standard},
-                { name: 'TPS', value: 'Bot Offline'},
-                { name: 'Uptime', value: 'Bot Offline'},
-            ]
-        } else {
-            var twoBfield = [
-                { name: 'Priority Queue', value: prio},
-                { name: 'Standard Queue', value: standard},
-                { name: 'TPS', value: TPS},
-                { name: 'Uptime', value: uptime},
-            ] 
-        }
-        const embed = new Discord.MessageEmbed()
-            .setColor('#F531CA')
-            .setTitle('2B2T Stats')
-            .addFields(twoBfield)
-        message.channel.send(embed);
+        twobee.custom(Discord, message, fetch);
     }
 
     else if (command === 'mcskin') {
         console.log(`McSkin Command Issued`)
-        if (!args.length) {
-            return message.channel.send('You need to specify a Player Name!');
-    };
-        const uuid = await fetch(`https://api.mojang.com/users/profiles/minecraft/${args}`).then(response => response.json());
-        const skin = ('https://minotar.net/armor/body/' + uuid.id + '/256.png');
-        const embed = new Discord.MessageEmbed()
-            .setTitle(`${args}`)
-            .setColor('#F531CA')
-            .setImage(skin);
-    message.channel.send(embed);
+        mcskin.custom(Discord, message, fetch, args);
     }
-    /*
-    else if (command === 'hypixel') {
-        console.log(`Hypixel Command Issued`)
-            if (!args.length) {
-                return message.channel.send('You need to specify a Player Name!');
-        };
 
-        const uuid = await fetch(`https://api.mojang.com/users/profiles/minecraft/${args}`).then(response => response.json());
-        const hypixel = await fetch(`https://api.hypixel.net/player?key=${auth.hyapikey}&uuid=${uuid.id}`).then(hypixelresponse => hypixelresponse.json());
-        const hypixel2 = hypixel.player.stats
-        console.log(hypixel2.networkExp)
-        const embed = new Discord.MessageEmbed()
-            .setColor('#F531CA')
-            .setTitle(hypixel2.networkExp)
-        message.channel.send(embed);
-    }
-*/
     else if (command === 'watchdog') {
         console.log(`Watchdog Command Issued`)
-    const wdStats = await fetch(`https://api.hypixel.net/watchdogstats?key=${auth.hyapikey}`).then(response => response.json());
-    const embed = new Discord.MessageEmbed()
-        .setColor('#F531CA')
-        .setTitle('Watchdog Stats')
-        .addFields(
-            { name: 'Bans in the last Day', value: trim(wdStats.watchdog_rollingDaily, 1024) },
-            { name: 'Bans in the last Minute', value: trim(wdStats.watchdog_lastMinute, 1024) },
-            { name: 'Watchdog Bans Ever', value: trim(wdStats.watchdog_total, 1024) },
-            )
-    message.channel.send(embed);
+        watchdog.custom(Discord, message, fetch, auth);
 }
 
     //Get MC Username UUID From Mojang API
     else if (command === 'uuid') {
         console.log(`UUID Command Issued`)
-            if (!args.length) {
-                return message.channel.send('You need to specify a Player Name!');
-        };
-
-        const uuid = await fetch(`https://api.mojang.com/users/profiles/minecraft/${args}`).then(response => response.json());
-        const embed = new Discord.MessageEmbed()
-			.setColor('#F531CA')
-			.setTitle(uuid.id)
-        message.channel.send(embed);
+        uuid.custom(Discord, message, fetch, args);
     } 
     
     //Check Hypixel Online Status
     else if (command === 'hyonline') {
         console.log(`Hyonline Command Issued`)
-        if (!args.length) {
-            return message.channel.send('You need to specify a Player Name!');
-    };
-
-    //Get UUID because Hypixel API cant take Usernames
-    const uuid = await fetch(`https://api.mojang.com/users/profiles/minecraft/${args}`).then(response => response.json());
-
-    //Get Online Status
-    const hypixel = await fetch(`https://api.hypixel.net/status?key=${auth.hyapikey}&uuid=${uuid.id}`).then(hypixelresponse => hypixelresponse.json());
-
-    //Check for Map and Mode, because hypixel has 2 fucking variables that dont exist all the time
-    if (hypixel.session && hypixel.session.mode) {
-  var fields =[  { name: 'Online', value: trim(hypixel.session.online, 1024) },
-            { name: 'Gametype', value: trim(hypixel.session.gameType, 1024) },
-            { name: 'Mode', value: trim(hypixel.session.mode, 1024) }, ]
-            }
-    if (hypixel.session && hypixel.session.map) {
-        var fields =[  { name: 'Online', value: trim(hypixel.session.online, 1024) },
-          { name: 'Gametype', value: trim(hypixel.session.gameType, 1024) },
-          { name: 'Map', value: trim(hypixel.session.map, 1024) }, ]
-          }
-    if (hypixel.session && hypixel.session.map && hypixel.session.mode) {
-        var fields =[  { name: 'Online', value: trim(hypixel.session.online, 1024) },
-          { name: 'Gametype', value: trim(hypixel.session.gameType, 1024) },
-          { name: 'Mode', value: trim(hypixel.session.mode, 1024) },
-          { name: 'Map', value: trim(hypixel.session.map, 1024) }, ]
-          }
-
-    //Create Embed, Include Username and Status
-    if (hypixel.session.online === false) {
-        const embed = new Discord.MessageEmbed()
-        .setColor('#FF0000')
-        .setTitle(args)
-        .addFields(
-            { name: 'Online', value: trim(hypixel.session.online, 1024) },
-        );
-    message.channel.send(embed);  
-    } else if (hypixel.session.online === true) {
-        const embed = new Discord.MessageEmbed()
-            .setColor('#00FF00')
-            .setTitle(args)
-            .addFields(fields);
-        message.channel.send(embed);
-            }
+        hypixelonline.custom(Discord, message, fetch, auth, args);
     };
 
 });
