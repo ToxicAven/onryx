@@ -68,7 +68,7 @@ bot.on('message', async message => {
 
     else if (command === 'ping') {
         console.log(`Ping Command Issued`)
-        ping.custom(Discord, message);
+        ping.custom(Discord, message, bot);
     }
 
       else if (command === 'help') {

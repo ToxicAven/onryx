@@ -1,5 +1,5 @@
       var ping = {
-        custom: function(Discord, message) {
+        custom: function(Discord, message, bot) {
             const embed = new Discord.MessageEmbed()
       .setTitle("Ping")
       .addFields({ name: 'Bot => Discord', value: `${Math.round(bot.ws.ping)}ms`},)
