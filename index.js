@@ -12,10 +12,10 @@ var uwuify = require('./cmds/uwuify.js');
 var version = require('./cmds/version.js');
 var ping = require('./cmds/ping.js')
 var help = require('./cmds/help.js')
-//var catgirl = require('./cmds/catgirl.js');
+var catgirl = require('./cmds/catgirl.js');
 
 //Constants
-const botversion = '0.5.8';
+const botversion = '0.5.9';
 const prefix = '^';
 
 //Init P2
@@ -40,12 +40,7 @@ bot.on('message', async message => {
 
     else if (command === 'catgirl') {
         console.log(`Catgirl Command Issued`)
-        //catgirl.custom(message, Discord, fetch);
-        const caturl = await fetch(`https://nekos.life/api/neko`).then(response => response.json());
-        const embed = new Discord.MessageEmbed()
-            .setTitle("nya!~")
-            .setImage(caturl.neko);
-    message.channel.send(embed);
+        catgirl.custom(message, Discord, fetch);
     }
 
     else if (command === 'uwu') {
