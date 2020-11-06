@@ -9,15 +9,17 @@ const date = Date.now()
 
 //Commands Announcement
 var uwuify = require('./cmds/uwuify.js');
-
+var version = require('./cmds/version.js');
+var ping = require('./cmds/ping.js')
+//var catgirl = require('./cmds/catgirl.js');
 
 //Constants
-const version = '0.5.4';
+const botversion = '0.5.7';
 const prefix = '^';
 
 //Init P2
 bot.on("ready", () => {
-    console.log(`\n------------\nOnryx ${version}\nRunning as ${bot.user.tag}\nMade by ToxicAven#3678\nLicensed under GNU AGPL-3.0\n------------\n`)
+    console.log(`\n------------\nOnryx ${botversion}\nRunning as ${bot.user.tag}\nMade by ToxicAven#3678\nLicensed under GNU AGPL-3.0\n------------\n`)
 });
 
 //Commands List
@@ -44,7 +46,7 @@ bot.on('message', async message => {
     //Version Command
     if (command === 'version') {
         console.log(`Version Command Issued`)
-        message.channel.send('Running Bot Version ' + version);
+        version.custom(botversion, message);
     }   
 
     else if (command === 'catgirl') {
@@ -57,6 +59,7 @@ bot.on('message', async message => {
     }
 
     else if (command === 'uwu') {
+        console.log(`uwu Command Issued`)
         if (!args.length) {
             return message.channel.send('Nyothing to uwufy...');
     };
@@ -65,11 +68,7 @@ bot.on('message', async message => {
 
     else if (command === 'ping') {
         console.log(`Ping Command Issued`)
-        const embed = new Discord.MessageEmbed()
-      .setTitle("Ping")
-      .addFields({ name: 'Bot => Discord', value: `${Math.round(bot.ws.ping)}ms`},)
-      .setColor('#0099ff');
-  message.channel.send(embed);
+        ping.custom(Discord, message);
     }
 
       else if (command === 'help') {
