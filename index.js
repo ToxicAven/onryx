@@ -6,11 +6,13 @@ const fetch = require('node-fetch');
 const querystring = require('querystring');
 const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
 const date = Date.now()
-//Deps
+
+//Commands Announcement
+var uwuify = require('./cmds/uwuify.js');
 
 
 //Constants
-const version = '0.5.3';
+const version = '0.5.4';
 const prefix = '^';
 
 //Init P2
@@ -52,6 +54,13 @@ bot.on('message', async message => {
             .setTitle("nya!~")
             .setImage(caturl.neko);
     message.channel.send(embed);
+    }
+
+    else if (command === 'uwu') {
+        if (!args.length) {
+            return message.channel.send('Nyothing to uwufy...');
+    };
+    uwuify.custom(args, message);
     }
 
     else if (command === 'ping') {
