@@ -16,9 +16,10 @@ var catgirl = require('./cmds/catgirl.js');
 var twobee = require('./cmds/2b2t.js');
 var mcskin = require('./cmds/mcskin.js');
 var watchdog = require('./cmds/watchdog.js');
+const uuid = require('./cmds/uuid.js');
 
 //Constants
-const botversion = '0.5.12';
+const botversion = '0.5.13';
 const prefix = '^';
 
 //Init P2
@@ -94,15 +95,7 @@ bot.on('message', async message => {
     //Get MC Username UUID From Mojang API
     else if (command === 'uuid') {
         console.log(`UUID Command Issued`)
-            if (!args.length) {
-                return message.channel.send('You need to specify a Player Name!');
-        };
-
-        const uuid = await fetch(`https://api.mojang.com/users/profiles/minecraft/${args}`).then(response => response.json());
-        const embed = new Discord.MessageEmbed()
-			.setColor('#F531CA')
-			.setTitle(uuid.id)
-        message.channel.send(embed);
+        uuid.custom(Discord, message, fetch, args);
     } 
     
     //Check Hypixel Online Status
