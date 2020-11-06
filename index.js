@@ -11,28 +11,17 @@ const date = Date.now()
 var uwuify = require('./cmds/uwuify.js');
 var version = require('./cmds/version.js');
 var ping = require('./cmds/ping.js')
+var help = require('./cmds/help.js')
 //var catgirl = require('./cmds/catgirl.js');
 
 //Constants
-const botversion = '0.5.7';
+const botversion = '0.5.8';
 const prefix = '^';
 
 //Init P2
 bot.on("ready", () => {
     console.log(`\n------------\nOnryx ${botversion}\nRunning as ${bot.user.tag}\nMade by ToxicAven#3678\nLicensed under GNU AGPL-3.0\n------------\n`)
 });
-
-//Commands List
-var commandsList = [
-    prefix + "version - Displays version of bot",
-    prefix + "help - Displays this message",
-    prefix + "uuid - Display a Minecraft Usernames UUID",
-    prefix + "hyonline - Checks A players Hypixel status, and location if Online",
-    prefix + "2b2t - Checks Stats of The 2B2T Minecraft Server",
-    prefix + "ping - Checks the Bots Connection to Discord API",
-    prefix + "catgirl - Random Catgirl Pic. uwu",
-    prefix + "watchdog - Check Past day, Minute, and All time Bans by Watchdog AC"
-]
 
 
 //commands handling
@@ -51,6 +40,7 @@ bot.on('message', async message => {
 
     else if (command === 'catgirl') {
         console.log(`Catgirl Command Issued`)
+        //catgirl.custom(message, Discord, fetch);
         const caturl = await fetch(`https://nekos.life/api/neko`).then(response => response.json());
         const embed = new Discord.MessageEmbed()
             .setTitle("nya!~")
@@ -73,11 +63,7 @@ bot.on('message', async message => {
 
       else if (command === 'help') {
         console.log(`Help Command Issued`)
-              const embed = new Discord.MessageEmbed()
-            .setTitle("Commands")
-            .setDescription(commandsList)
-            .setColor('#0099ff');
-        message.channel.send(embed);
+        help.custom(Discord, message);
     }
     else if (command === '2b2t') {
         console.log(`2b2t Command Issued`)
