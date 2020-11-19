@@ -23,3 +23,6 @@ catgirl - Random Catgirl Pic! uwu
 
 watchdog - Check Past day, Minute, and All time Bans by Watchdog AntiCheat on the Hypixel Network!
 
+#### Thanks and Screw-Yous
+
+Fuck you `JustJacky#2667`
